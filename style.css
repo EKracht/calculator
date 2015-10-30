@@ -1,0 +1,19 @@
+body {
+  text-align: center;
+}
+
+#numArea {
+  height: 50px;
+  width: 45%;
+  border: 2px solid black;
+}
+
+#answer {
+  height: 50px;
+  width: 45%;
+  border: 2px solid black;
+}
+
+.btn-default {
+  width: 15%;
+}
