@@ -1,6 +1,6 @@
 'use strict'
 
-$(document).ready(function(){
+$(document).ready(function init(){
   var clickedNumbers = [];
   var numArray = [];
   $(".button").click(function(){
@@ -8,6 +8,14 @@ $(document).ready(function(){
     clickedNumbers.push(buttonVal);
     console.log("numbers", clickedNumbers);
     $("#numArea").text(clickedNumbers);
+
+    console.log(clickedNumbers.indexOf("c"));
+    if(clickedNumbers.indexOf("c") > 0){
+      clickedNumbers = [];
+      $("#numArea").text("0");
+      $("#answer").text("0");
+      init();
+    }
     // console.log(clickedNumbers.indexOf("+/-") > 0);
     // console.log("str", clickedNumbers.join(""));
     // var str = clickedNumbers.join("");
@@ -43,7 +51,7 @@ $(document).ready(function(){
     if (clickedNumbers.indexOf("+/-") == true) {
       //console.log("hi");
       var str = clickedNumbers.join("");
-      numArray = str.split("?");
+      numArray = str.split("+/-");
       $("#answer").text(plusMinus(numArray[0]));
     }
 });
