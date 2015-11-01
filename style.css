@@ -2,18 +2,15 @@ body {
   text-align: center;
 }
 
-#numArea {
-  height: 50px;
-  width: 45%;
+.area {
   border: 2px solid black;
+  margin-left: 28%;
+  margin-right: 28%;
+  height: 50px;
+  width: 40%;
 }
 
-#answer {
+button {
+  width: 100px;
   height: 50px;
-  width: 45%;
-  border: 2px solid black;
-}
-
-.btn-default {
-  width: 15%;
 }

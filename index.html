@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Calculator</title>
 
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-3 col-md-6 col-md-offset-3">
-        <div id="numArea"></div><div id="answer"></div>
+        <div class="area" id="numArea"></div><div class="area" id="answer"></div>
       </div>
     </div>
   </div>
@@ -26,37 +26,38 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-3 col-md-6 col-md-offset-3">
-      	<button id="1" class="button">1</button>
-        <button id="2" class="button">2</button>
-        <button id="3" class="button">3</button>
-        <button id="+" class="button">+</button>
-        <button id="-" class="button">-</button>
+      	<button id="1" value="1" class="number button">1</button>
+        <button id="2" value="2" class="number button">2</button>
+        <button id="3" value="3" class="number button">3</button>
+        <button id="plus" value="+" class="button operator2">+</button>
+        <button id="minus" value="-" class="button operator2">-</button>
       </div>
     </div>
     <div class="row">
       <div class="col-md-offset-3 col-md-6 col-md-offset-3">
-        <button id="4" class="button">4</button>
-        <button id="5" class="button">5</button>
-        <button id="6" class="button">6</button>
-        <button id="*" class="button">*</button>
-        <button id="/" class="button">/</button>
+        <button id="4" value="4" class="number button">4</button>
+        <button id="5" value="5" class="number button">5</button>
+        <button id="6" value="6" class="number button">6</button>
+        <button id="times" value="*" class="button operator2">*</button>
+        <button id="divide" value="/" class="button operator2">/</button>
       </div>
     </div>
     <div class="row">
       <div class="col-md-offset-3 col-md-6 col-md-offset-3">
-        <button id="7" class="button">7</button>
-        <button id="8" class="button">8</button>
-        <button id="9" class="button">9</button>
-        <button id="?" class="button">%</button>
-        <button id="+/-" class="button">+/-</button>
+        <button id="7" value="7" class="number button">7</button>
+        <button id="8" value="8" class="number button">8</button>
+        <button id="9" value="9" class="number button">9</button>
+        <button id="percent" value="%" class="button operator1">%</button>
+        <button id="plusMinus" value="inv" class="button operator1">+/-</button>
       </div>
     </div>
     <div class="row">
       <div class="col-md-offset-3 col-md-6 col-md-offset-3">
-        <button id="." class="button">.</button>
-        <button id="0" class="button">0</button>
-        <button id="=" class="button">=</button>
-        <button id="c" class="button">c</button>
+        <button id="." value="." class="number" class="button">.</button>
+        <button id="0" value="0" class="number button">0</button>
+        <button id="equals" value="=" class="button">=</button>
+        <button id="carrot" value="^" class="button operator2">^</button>
+        <button id="clear" value="c" class="button">c</button>
       </div>
     </div>
 	</div>

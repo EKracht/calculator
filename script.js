@@ -1,61 +1,129 @@
 'use strict'
 
-$(document).ready(function init(){
-  var clickedNumbers = [];
-  var numArray = [];
-  $(".button").click(function(){
-    var buttonVal = this.id;
-    clickedNumbers.push(buttonVal);
-    console.log("numbers", clickedNumbers);
-    $("#numArea").text(clickedNumbers);
+var clickedNumbers = "";
+var previousVal = 0;
+var currentVal = 0;
 
-    console.log(clickedNumbers.indexOf("c"));
-    if(clickedNumbers.indexOf("c") > 0){
-      clickedNumbers = [];
-      $("#numArea").text("0");
-      $("#answer").text("0");
-      init();
+$(document).ready(init);
+
+function init(){
+  $('.number').click(showNumbers);
+  $('.operator2').click(showOperators);
+  $('.operator1').click(showOperators);
+  $('#equals').click(equals);
+  $('#clear').click(clear);
+}
+
+function showNumbers() {
+    var buttonVal = this.id;
+    clickedNumbers += buttonVal;
+    $("#numArea").text(clickedNumbers);
+}
+
+function showOperators() {
+    var buttonVal = this.value;
+    if (previousVal > 0 || previousVal < 0) {
+      clickedNumbers += previousVal + buttonVal;
+    } else {
+      clickedNumbers += buttonVal;
     }
-    // console.log(clickedNumbers.indexOf("+/-") > 0);
-    // console.log("str", clickedNumbers.join(""));
-    // var str = clickedNumbers.join("");
-    // numArray = str.split("+/-");
-    // console.log("array", numArray);
-    // console.log("answer", plusMinus(numArray[0]));
-    if (clickedNumbers.indexOf("+") == true && clickedNumbers[clickedNumbers.indexOf("+") + 1] > 1) {
-      var str = clickedNumbers.join("");
-      numArray = str.split("+");
-      $("#answer").text(sum(numArray[0], numArray[1]));
+    $("#numArea").text(clickedNumbers);
+}
+
+function equals() {
+  var result = equalsHelper(clickedNumbers);
+  $('#answer').text(result);
+  $('#numArea').text(result);
+  clickedNumbers = result;
+  buttonVal = "";
+}
+
+function equalsHelper(str){
+
+  var o1 = str.lastIndexOf("+");
+  var o2 = str.lastIndexOf("-");
+  var o3 = str.lastIndexOf("*");
+  var o4 = str.lastIndexOf("/");
+  var o5 = str.lastIndexOf("%");
+  var o6 = str.lastIndexOf("inv");
+  var o7 = str.lastIndexOf("^");
+
+  var maxOp = Math.max(o1, o2, o3, o4, o5, o6, o7);
+
+  if (maxOp == o1 && str[str.lastIndexOf("+") + 1]) {
+    var index = str.lastIndexOf("+");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) + +lastNum;
     }
-    if (clickedNumbers.indexOf("-") == true && clickedNumbers[clickedNumbers.indexOf("-") + 1] > 1) {
-      var str = clickedNumbers.join("");
-      numArray = str.split("-");
-      $("#answer").text(minus(numArray[0], numArray[1]));
+  }
+  if (maxOp == o2 && str[str.lastIndexOf("-") + 1]) {
+    var index = str.lastIndexOf("-");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) - +lastNum;
     }
-    if (clickedNumbers.indexOf("*") == true && clickedNumbers[clickedNumbers.indexOf("*") + 1] > 1) {
-      var str = clickedNumbers.join("");
-      numArray = str.split("*");
-      $("#answer").text(multiply(numArray[0], numArray[1]));
+  }
+  if (maxOp == o3 && str[str.lastIndexOf("*") + 1]) {
+    var index = str.lastIndexOf("*");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) * +lastNum;
     }
-    if (clickedNumbers.indexOf("/") == true && clickedNumbers[clickedNumbers.indexOf("/") + 1] > 1) {
-      var str = clickedNumbers.join("");
-      numArray = str.split("/");
-      $("#answer").text(divide(numArray[0], numArray[1]));
+  }
+  if (maxOp == o4 && str[str.lastIndexOf("/") + 1] != 0 && str[str.lastIndexOf("/") + 1]) {
+    var index = str.lastIndexOf("/");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) / +lastNum;
     }
-    if (clickedNumbers.indexOf("?") > 0) {
-      //console.log("hi");
-      var str = clickedNumbers.join("");
-      numArray = str.split("?");
-      $("#answer").text(percent(numArray[0]));
+  }
+  // if (str.indexOf("/") > 0 && str[str.indexOf("/") + 1] == 0) {
+  //   $("#answer").text("Error");
+  // }
+  if (maxOp == o5) {
+    var index = str.lastIndexOf("%");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) / 100;
     }
-    if (clickedNumbers.indexOf("+/-") == true) {
-      //console.log("hi");
-      var str = clickedNumbers.join("");
-      numArray = str.split("+/-");
-      $("#answer").text(plusMinus(numArray[0]));
+  }
+  if (maxOp == o6) {
+    var index = str.lastIndexOf("inv");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return +equalsHelper(frontPart) * (-1);
     }
-});
-});
+  }
+  if (maxOp == o7 && str[str.lastIndexOf("^") + 1] > 1) {
+    var index = str.lastIndexOf("^");
+    var frontPart = str.substring(0, index);
+    var lastNum = str.substring(index + 1);
+    if (frontPart) {
+      return Math.pow(equalsHelper(frontPart), lastNum);
+    }
+  } 
+  // previousVal = $('#answer').text();
+  // $("#numArea").text(previousVal);
+  // clickedNumbers = $("#numArea").val();
+  return +str;
+}
+
+function clear() {
+  var buttonVal = this.value;
+  clickedNumbers += buttonVal;
+  $("#numArea").text("0");
+  $("#answer").text("0");
+  clickedNumbers = "";
+  previousVal = 0;
+}
+
 
 function sum(a, b){
   return +a + +b;
@@ -78,85 +146,15 @@ function percent(a){
 }
 
 function plusMinus(a){
-  return +a * (-1);
+  return a * (-1);
+}
+
+function expNum(a, b){
+  return Math.pow(a, b);
 }
 
 
-/*
-$(function(){
-  resetCalculator("0");
-  $(".btn-default").click(function(){
-    if ($("#numArea").data("prev") == true) {
-      resetCalculator($(this).text());
-    } else if (($"#numArea").data("pendingOperator") == true ) && ($(#numArea).data("value1hold") == false) {
-      $("#numArea").data("value1", $("#numArea").val());
-      $("#numArea").data("value1hold", true);
-
-      $("#numArea").val($(this).text());
-      $("#numArea").data("value2", $("#numArea").val());
-      $("#numArea").data("value2hold", true);
-    } else if ($("#numArea").data("pendingOperator", true) && ($("#numArea").data("value1hold") == true) {
-      var curValue = ("#numArea").val();
-      var toAdd = $(this).text();
-      var newValue = curValue + toAdd;
-
-      $("#numArea").val(newValue);
-      $("#numArea").data("value2", $("#numArea", val());
-
-  })
-})
-
-
-
-$("#equals").click(function(){
-
-  if(($("#numArea").data("value1hold") === true) && ($("numArea").data("value2hold")) === true) {
-    if ($("#numArea").data("operator") == "+") {
-      var finalValue = parseFloat($("numArea").data("value1")) + parseFloat($("numArea").data("value2"));
-    } else if ($("#numArea").data("operator") == "-") {
-      var finalValue = parseFloat($("numArea").data("value1")) - parseFloat($("numArea").data("value2"))
-    } else if ($("#numArea").data("operator") == "*") {
-      var finalValue = parseFloat($("numArea").data("value1")) * parseFloat($("numArea").data("value2"))
-    } else if ($("#numArea").data("operator") == "/") {
-      var finalValue = parseFloat($("numArea").data("value1")) / parseFloat($("numArea").data("value2"))
-    } 
-    $("#numArea").val(finalValue);
-    resetCalculator(finalValue);
-    $(#numArea).data("prev", true);
-  } else {
-    // do nothing
-  }
-});
-
-$("#equals").click(function(){
-
-  if(($("#numArea").data("value1hold") === true) && ($("numArea").data("value2hold")) === false) {
-    if ($("#numArea").data("operator") == "%") {
-      var finalValue = parseFloat($("numArea").data("value1")) / 100;
-    } else if ($("#numArea").data("operator") == "+/-") {
-      var finalValue = parseFloat($("numArea").data("value1")) * (-1);
-    } 
-    $("#numArea").val(finalValue);
-    resetCalculator(finalValue);
-    $(#numArea).data("prev", true);
-  } else {
-    // do nothing
-  }
-});
-
-
-
-function resetCalculator(curValue) { 
-  $("#numArea").val(curValue); 
-  $("#func").removeClass("pendingFunction"); 
-  $("#numArea").data("pendingOperator", false); 
-  $("#numArea").data("operator", ""); 
-  $("#numArea").data("value1hold", false); 
-  $("#numArea").data("value2hold", false); 
-  $("#numArea").data("value1", curValue); 
-  $("#numArea").data("value2", 0); 
-  $("#numArea").data("prev", false); 
-}
-*/
-
-
+    // if (index == -1) {
+    // console.log('inhit');
+    //   return +str;
+    // }
