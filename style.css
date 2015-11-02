@@ -1,16 +1,40 @@
 body {
-  text-align: center;
+  text-align: left;
+}
+
+h1 {
+  margin-left: 30.7%;
+  margin-right: 25.3%;
+  color: #D9853B;
+  font-size: 40px;
+}
+
+.calculator {
+  min-height: 440px;
+  max-height: 440px;
+  min-width: 600px;
+  max-width: 600px;
+  background-color: #F3FAB6;
 }
 
 .area {
-  border: 2px solid black;
-  margin-left: 28%;
-  margin-right: 28%;
-  height: 50px;
-  width: 40%;
+  border: 2px solid #CBE32D;
+  margin-left: 26%;
+  margin-right: 30%;
+  height: 40px;
+  width: 30%;
+  padding: 8px;
+  color: #74AFAD;
+  font-size: 20px;
+}
+
+.row {
+  margin-left: 40px;
 }
 
 button {
   width: 100px;
   height: 50px;
+  background-color: #A8CD1B;
+  font-size: 20px;
 }
